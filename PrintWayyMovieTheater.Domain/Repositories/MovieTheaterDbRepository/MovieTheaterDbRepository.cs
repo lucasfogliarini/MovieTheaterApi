@@ -35,6 +35,10 @@ namespace PrintWayyMovieTheater.Domain.Repositories
         {
             _dbContext.Update(entity);
         }
+        public void Delete<TEntity>(TEntity entity) where TEntity : class, IEntity
+        {
+            _dbContext.Remove(entity);
+        }
         public void DetachEntries()
         {
             var entities = _dbContext.ChangeTracker.Entries();

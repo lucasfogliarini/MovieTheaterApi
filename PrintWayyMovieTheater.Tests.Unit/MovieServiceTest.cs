@@ -49,14 +49,14 @@ namespace PrintWayyMovieTheater.Tests.Unit
             //Given
             var movie = new Movie
             {
-                Title = "Matrix",
+                Title = "The Matrix",
                 Duration = 136,
                 Description = "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.",
                 Banner = ""
             };
+            _movieService.Create(movie);
 
             //When
-            _movieService.Create(movie);
             void action() => _movieService.Create(movie);
 
             //Then
@@ -76,13 +76,67 @@ namespace PrintWayyMovieTheater.Tests.Unit
                 Banner = ""
             };
             var expectedChanges = 1;
+            _movieService.Create(movie);
 
             //When
-            _movieService.Create(movie);
             var changes = _movieService.Update(movie);
 
             //Then
             Assert.Equal(expectedChanges, changes);
+        }
+
+        [Fact]
+        public void Delete_ShouldExpectedChanges()
+        {
+            //Given
+            var movie = new Movie
+            {
+                Title = "The Green Mile",
+                Duration = 189,
+                Description = "The lives of guards on Death Row are affected by one of their charges: a black man accused of child murder and rape, yet who has a mysterious gift.",
+                Banner = ""
+            };
+            var expectedChanges = 1;
+            _movieService.Create(movie);
+
+            //When
+            var changes = _movieService.Delete(movie.Id);
+
+            //Then
+            Assert.Equal(expectedChanges, changes);
+        }
+
+        [Fact]
+        public void Delete_ShouldThrowException_WhenItHasSessions()
+        {
+            //Given
+            var movie = new Movie
+            {
+                Title = "Saving Private Ryan",
+                Duration = 169,
+                Description = "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action.",
+                Banner = "",
+                Sessions = new List<MovieSession>
+                {
+                    new MovieSession
+                    {
+                        MotionGraphics = MotionGraphics.ThreeDimensions,
+                        Presentation = DateTime.Now.AddDays(20),
+                        Room = new MovieRoom
+                        {
+                            Name = "Room 1",
+                            Seats = 2
+                        }
+                    }
+                }
+            };
+            _movieService.Create(movie);
+
+            //When
+            void action() => _movieService.Delete(movie.Id);
+
+            //Then
+            Assert.Throws<ValidationException>(action);
         }
     }
 }

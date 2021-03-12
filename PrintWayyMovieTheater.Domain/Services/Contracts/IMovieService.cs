@@ -6,5 +6,6 @@ namespace PrintWayyMovieTheater.Domain.Services
     {
         int Create(Movie movie);
         int Update(Movie movie);
+        int Delete(int id);
     }
 }

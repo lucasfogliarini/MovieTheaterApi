@@ -1,4 +1,5 @@
-﻿using PrintWayyMovieTheater.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Repositories;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,26 +17,20 @@ namespace PrintWayyMovieTheater.Domain.Services
 
         public int Create(Movie movie)
         {
-            ValidateExistence(movie.Title);
+            ValidateTitleExistence(movie.Title);
 
             _movieTheaterDbRepository.Add(movie);
             var changes = _movieTheaterDbRepository.Commit();
 
             return changes;
         }
-
         public int Update(Movie movie)
         {
-            var movieDb = _movieTheaterDbRepository.Query<Movie>().FirstOrDefault(e => e.Id == movie.Id);
-            if (movieDb == null)
-            {
-                var message = $"There is no Movie with the id '{movie.Id}'";
-                throw new ValidationException(message);
-            }
+            var movieDb = Get(movie.Id);
 
             if (movie.Title != movieDb.Title)
             {
-                ValidateExistence(movie.Title);
+                ValidateTitleExistence(movie.Title);
             }
 
             movieDb.Title = movie.Title;
@@ -48,8 +43,33 @@ namespace PrintWayyMovieTheater.Domain.Services
 
             return changes;
         }
+        public int Delete(int movieId)
+        {
+            var movie = Get(movieId);
+            var hasSessions = movie.Sessions.Any();
 
-        private void ValidateExistence(string movieTitle)
+            if (hasSessions)
+            {
+                var message = $"You cannot remove a movie with sessions.";
+                throw new ValidationException(message);
+            }
+
+            _movieTheaterDbRepository.Delete(movie);
+            var changes = _movieTheaterDbRepository.Commit();
+            return changes;
+        }
+
+        private Movie Get(int movieId)
+        {
+            var movie = _movieTheaterDbRepository.Query<Movie>().Include(e=>e.Sessions).FirstOrDefault(e => e.Id == movieId);
+            if (movie == null)
+            {
+                var message = $"There is no Movie with the id '{movie.Id}'";
+                throw new ValidationException(message);
+            }
+            return movie;
+        }
+        private void ValidateTitleExistence(string movieTitle)
         {
             var movieExists = _movieTheaterDbRepository.Query<Movie>().Any(e => e.Title == movieTitle);
             if (movieExists)

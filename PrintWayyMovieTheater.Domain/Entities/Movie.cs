@@ -1,4 +1,6 @@
-﻿namespace PrintWayyMovieTheater.Domain.Entities
+﻿using System.Collections.Generic;
+
+namespace PrintWayyMovieTheater.Domain.Entities
 {
     public class Movie : IEntity
     {
@@ -10,5 +12,6 @@
         /// </summary>
         public int Duration { get; set; }
         public string Banner { get; set; }
+        public List<MovieSession> Sessions { get; set; }
     }
 }
