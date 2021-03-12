@@ -121,7 +121,7 @@ namespace PrintWayyMovieTheater.Tests.Unit
                     new MovieSession
                     {
                         MotionGraphics = MotionGraphics.ThreeDimensions,
-                        Presentation = DateTime.Now.AddDays(20),
+                        PresentationStart = DateTime.Now.AddDays(20),
                         Room = new MovieRoom
                         {
                             Name = "Room 1",
