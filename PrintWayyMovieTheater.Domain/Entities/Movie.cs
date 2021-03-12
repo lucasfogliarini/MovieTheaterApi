@@ -5,6 +5,9 @@
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        /// <summary>
+        /// Duration in minutes
+        /// </summary>
         public int Duration { get; set; }
         public string Banner { get; set; }
     }

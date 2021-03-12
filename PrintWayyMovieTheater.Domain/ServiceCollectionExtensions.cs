@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PrintWayyMovieTheater.Domain.Repositories;
+using PrintWayyMovieTheater.Domain.Services;
 
 namespace PrintWayyMovieTheater.Domain
 {
@@ -23,6 +24,7 @@ namespace PrintWayyMovieTheater.Domain
         /// <param name="serviceCollection"></param>
         public static void AddLogicalServices(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddTransient<IMovieService, MovieService>();
         }
         /// <summary>
         /// Add repository services.
