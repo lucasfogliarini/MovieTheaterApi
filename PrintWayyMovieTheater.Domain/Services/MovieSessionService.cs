@@ -1,5 +1,6 @@
 ﻿using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Repositories;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -27,6 +28,12 @@ namespace PrintWayyMovieTheater.Domain.Services
         public int Delete(int movieSessionId)
         {
             var movieSession = Get(movieSessionId);
+            var deadline = movieSession.PresentationStart.AddDays(-9).Date;
+            if (DateTime.Today >= deadline)
+            {
+                var message = "You cannot delete a movie 9 days or less before it starts.";
+                throw new ValidationException(message);
+            }
 
             _movieTheaterDbRepository.Delete(movieSession);
             var changes = _movieTheaterDbRepository.Commit();
@@ -38,7 +45,7 @@ namespace PrintWayyMovieTheater.Domain.Services
             var movieSession = _movieTheaterDbRepository.Query<MovieSession>().FirstOrDefault(e => e.Id == movieSessionId);
             if (movieSession == null)
             {
-                var message = $"There is no MovieSession with the id '{movieSession.Id}'";
+                var message = $"There is no MovieSession with the id '{movieSessionId}'";
                 throw new ValidationException(message);
             }
             return movieSession;

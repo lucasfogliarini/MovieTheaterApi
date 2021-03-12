@@ -29,7 +29,7 @@ namespace PrintWayyMovieTheater.Tests.Unit
         public void Create_ShouldExpectedChanges()
         {
             //Given
-            var movieId = CreateMovie();
+            var movieId = CreateMovie(1);
             var movieSession = new MovieSession
             {
                 MovieId = movieId,
@@ -50,13 +50,64 @@ namespace PrintWayyMovieTheater.Tests.Unit
             Assert.Equal(expectedChanges, changes);
         }
 
-        private int CreateMovie()
+        [Fact]
+        public void Delete_ShouldExpectedChanges()
+        {
+            //Given
+            var movieId = CreateMovie(2);
+            var movieSession = new MovieSession
+            {
+                MovieId = movieId,
+                MotionGraphics = MotionGraphics.ThreeDimensions,
+                PresentationStart = DateTime.Now.AddDays(10),
+                Room = new MovieRoom
+                {
+                    Name = "Room 1",
+                    Seats = 50
+                }
+            };
+            _movieSessionService.Create(movieSession);
+            var expectedChanges = 1;
+
+            //When
+            var changes = _movieSessionService.Delete(movieSession.Id);
+
+            //Then
+            Assert.Equal(expectedChanges, changes);
+        }
+
+        [Fact]
+        public void Delete_ShouldThrowException_WhenPresentationStartLessThan10()
+        {
+            //Given
+            var movieId = CreateMovie(3);
+            var movieSession = new MovieSession
+            {
+                MovieId = movieId,
+                MotionGraphics = MotionGraphics.ThreeDimensions,
+                PresentationStart = DateTime.Now.AddDays(9),
+                Room = new MovieRoom
+                {
+                    Name = "Room 1",
+                    Seats = 50
+                }
+            };
+            _movieSessionService.Create(movieSession);
+
+            //When
+            void action() => _movieService.Delete(movieSession.Id);
+
+            //Then
+            Assert.Throws<ValidationException>(action);
+        }
+
+        private int CreateMovie(int part)
         {
             var movie = new Movie
             {
-                Title = "Life Is Beautiful",
+                Title = $"Back to the Future - Part {part}",
                 Duration = 116,
-                Description = "When an open-minded Jewish librarian and his son become victims of the Holocaust, he uses a perfect mixture of will, humor, and imagination to protect his son from the dangers around their camp."
+                Description = "Marty McFly, a 17-year-old high school student, is accidentally sent thirty years into the past in a time-traveling DeLorean invented by his close friend, the eccentric scientist Doc Brown."
             };
             _movieService.Create(movie);
             return movie.Id;

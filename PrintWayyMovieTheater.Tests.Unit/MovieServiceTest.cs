@@ -69,7 +69,6 @@ namespace PrintWayyMovieTheater.Tests.Unit
             //Given
             var movie = new Movie
             {
-                Id = 1,
                 Title = "Soul",
                 Duration = 100,
                 Description = "After landing the gig of a lifetime, a New York jazz pianist suddenly finds himself trapped in a strange land between Earth and the afterlife.",

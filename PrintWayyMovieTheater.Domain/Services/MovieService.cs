@@ -64,7 +64,7 @@ namespace PrintWayyMovieTheater.Domain.Services
             var movie = _movieTheaterDbRepository.Query<Movie>().Include(e=>e.Sessions).FirstOrDefault(e => e.Id == movieId);
             if (movie == null)
             {
-                var message = $"There is no Movie with the id '{movie.Id}'";
+                var message = $"There is no Movie with the id '{movieId}'";
                 throw new ValidationException(message);
             }
             return movie;
