@@ -5,5 +5,6 @@ namespace PrintWayyMovieTheater.Domain.Services
     public interface IMovieService
     {
         int Create(Movie movie);
+        int Update(Movie movie);
     }
 }
