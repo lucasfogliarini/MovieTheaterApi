@@ -29,10 +29,10 @@ namespace PrintWayyMovieTheater.Tests.Unit
         public void Create_ShouldExpectedChanges()
         {
             //Given
-            var movieId = CreateMovie(1);
+            var movie = CreateMovie(1);
             var movieSession = new MovieSession
             {
-                MovieId = movieId,
+                MovieId = movie.Id,
                 MotionGraphics = MotionGraphics.ThreeDimensions,
                 PresentationStart = DateTime.Now.AddDays(20),
                 Room = new MovieRoom
@@ -51,13 +51,35 @@ namespace PrintWayyMovieTheater.Tests.Unit
         }
 
         [Fact]
+        public void Create_ShouldThrowException_WhenRoomWasSelected()
+        {
+            //Given
+            var movie = CreateMovie(2);
+            var roomId = CreateMovieSession(movie.Id);
+            var movieSession = new MovieSession
+            {
+                MovieId = movie.Id,
+                RoomId = roomId,
+                MotionGraphics = MotionGraphics.ThreeDimensions,
+                PresentationStart = DateTime.Now.AddMinutes(movie.Duration),
+            };
+            var expectedChanges = 1;
+
+            //When
+            var changes = _movieSessionService.Create(movieSession);
+
+            //Then
+            Assert.Equal(expectedChanges, changes);
+        }
+
+        [Fact]
         public void Delete_ShouldExpectedChanges()
         {
             //Given
-            var movieId = CreateMovie(2);
+            var movie = CreateMovie(3);
             var movieSession = new MovieSession
             {
-                MovieId = movieId,
+                MovieId = movie.Id,
                 MotionGraphics = MotionGraphics.ThreeDimensions,
                 PresentationStart = DateTime.Now.AddDays(10),
                 Room = new MovieRoom
@@ -80,10 +102,10 @@ namespace PrintWayyMovieTheater.Tests.Unit
         public void Delete_ShouldThrowException_WhenPresentationStartLessThan10()
         {
             //Given
-            var movieId = CreateMovie(3);
+            var movie = CreateMovie(4);
             var movieSession = new MovieSession
             {
-                MovieId = movieId,
+                MovieId = movie.Id,
                 MotionGraphics = MotionGraphics.ThreeDimensions,
                 PresentationStart = DateTime.Now.AddDays(9),
                 Room = new MovieRoom
@@ -101,16 +123,33 @@ namespace PrintWayyMovieTheater.Tests.Unit
             Assert.Throws<ValidationException>(action);
         }
 
-        private int CreateMovie(int part)
+        private Movie CreateMovie(int part)
         {
             var movie = new Movie
             {
                 Title = $"Back to the Future - Part {part}",
-                Duration = 116,
+                Duration = 60,
                 Description = "Marty McFly, a 17-year-old high school student, is accidentally sent thirty years into the past in a time-traveling DeLorean invented by his close friend, the eccentric scientist Doc Brown."
             };
             _movieService.Create(movie);
-            return movie.Id;
+            return movie;
+        }
+
+        private int CreateMovieSession(int movieId)
+        {
+            var movieSession = new MovieSession
+            {
+                MovieId = movieId,
+                MotionGraphics = MotionGraphics.ThreeDimensions,
+                PresentationStart = DateTime.Now,
+                Room = new MovieRoom
+                {
+                    Name = "Room 1",
+                    Seats = 50,
+                }
+            };
+            _movieSessionService.Create(movieSession);
+            return movieSession.RoomId;
         }
     }
 }

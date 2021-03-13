@@ -50,7 +50,7 @@ namespace PrintWayyMovieTheater.Domain.Services
 
             if (hasSessions)
             {
-                var message = $"You cannot remove a movie with sessions.";
+                var message = $"You can't remove a movie with sessions.";
                 throw new ValidationException(message);
             }
 

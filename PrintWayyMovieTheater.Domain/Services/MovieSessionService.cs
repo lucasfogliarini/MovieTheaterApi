@@ -20,6 +20,18 @@ namespace PrintWayyMovieTheater.Domain.Services
             var movie = _movieTheaterDbRepository.Query<Movie>().FirstOrDefault(e => e.Id == movieSession.MovieId);
             movieSession.PresentationEnd = movieSession.PresentationStart.AddMinutes(movie.Duration);
 
+            var roomReserved = _movieTheaterDbRepository.Query<MovieSession>()
+                                .Any(ms => ms.RoomId == movieSession.RoomId
+                                && ((ms.PresentationStart <= movieSession.PresentationStart && movieSession.PresentationStart <= ms.PresentationEnd)
+                                || (ms.PresentationStart <= movieSession.PresentationEnd && movieSession.PresentationEnd <= ms.PresentationEnd)));
+
+            if (roomReserved)
+            {
+                var message = "You can't create a new session in this room, cause it has already been reserved.";
+                throw new ValidationException(message);
+            }
+
+
             _movieTheaterDbRepository.Add(movieSession);
             var changes = _movieTheaterDbRepository.Commit();
 
@@ -31,7 +43,7 @@ namespace PrintWayyMovieTheater.Domain.Services
             var deadline = movieSession.PresentationStart.AddDays(-9).Date;
             if (DateTime.Today >= deadline)
             {
-                var message = "You cannot delete a movie 9 days or less before it starts.";
+                var message = "You can't delete a session 9 days or less before it starts.";
                 throw new ValidationException(message);
             }
 
