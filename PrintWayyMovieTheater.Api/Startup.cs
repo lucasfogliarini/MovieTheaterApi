@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using PrintWayyMovieTheater.Domain;
 using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Services;
+using System;
 
 namespace PrintWayyMovieTheater.Api
 {
@@ -33,7 +34,8 @@ namespace PrintWayyMovieTheater.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, 
             IMovieRoomService movieRoomService, 
-            IMovieService movieService)
+            IMovieService movieService,
+            IMovieSessionService movieSessionService)
         {
             if (env.IsDevelopment())
             {
@@ -53,6 +55,7 @@ namespace PrintWayyMovieTheater.Api
 
             SeedMovieRooms(movieRoomService);
             SeedMovies(movieService);
+            SeedSessions(movieSessionService);
         }
 
         private void SeedMovieRooms(IMovieRoomService movieRoomService, int count = 5)
@@ -76,6 +79,22 @@ namespace PrintWayyMovieTheater.Api
                     Duration = 120 + i,
                     Description = "In summary ... " + i
                 });
+            }
+        }
+        private void SeedSessions(IMovieSessionService movieSessionService, int count = 15)
+        {
+            for (int i = 1; i <= count; i++)
+            {
+                var movieSession = new MovieSession
+                {
+                    MovieId = new Random().Next(1, 15),
+                    RoomId = new Random().Next(1, 5),
+                    TicketPrice = 30 + i,
+                    Audio = (MovieAudio)new Random().Next(0, 2),
+                    MotionGraphics = (MotionGraphics)new Random().Next(2,4),
+                    PresentationStart = DateTime.Now.AddDays(i),
+                };
+                movieSessionService.Create(movieSession);
             }
         }
     }
