@@ -23,5 +23,11 @@ namespace PrintWayyMovieTheater.Api.Controllers
             take = skip + take;
             return _movieSessionService.GetSessions(skip, take);
         }
+
+        [HttpDelete("{sessionId}")]
+        public int Delete(int sessionId)
+        {
+            return _movieSessionService.Delete(sessionId);
+        }
     }
 }
