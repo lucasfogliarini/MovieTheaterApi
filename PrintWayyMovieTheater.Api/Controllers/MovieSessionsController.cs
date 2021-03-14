@@ -7,7 +7,7 @@ namespace PrintWayyMovieTheater.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MovieSessionsController : ControllerBase
+    public class MovieSessionsController : BaseController
     {
         private readonly IMovieSessionService _movieSessionService;
 
@@ -17,17 +17,25 @@ namespace PrintWayyMovieTheater.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<MovieSession> Get(int skip)
+        public IActionResult Get(int skip)
         {
-            int take = 10;
-            take = skip + take;
-            return _movieSessionService.GetSessions(skip, take);
+            return Try(() =>
+            {
+                int take = 10;
+                take = skip + take;
+                var sessions = _movieSessionService.GetSessions(skip, take);
+                return Ok(sessions);
+            });
         }
 
         [HttpDelete("{sessionId}")]
-        public int Delete(int sessionId)
+        public IActionResult Delete(int sessionId)
         {
-            return _movieSessionService.Delete(sessionId);
+            return Try(() =>
+            {
+                var changes = _movieSessionService.Delete(sessionId);
+                return Ok(changes);
+            });
         }
     }
 }

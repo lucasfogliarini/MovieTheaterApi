@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Services;
-using System.Collections.Generic;
 
 namespace PrintWayyMovieTheater.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MovieRoomsController : ControllerBase
+    public class MovieRoomsController : BaseController
     {
         private readonly IMovieRoomService _movieRoomService;
 
@@ -17,9 +15,13 @@ namespace PrintWayyMovieTheater.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<MovieRoom> Get()
+        public IActionResult Get()
         {
-            return _movieRoomService.Get();
+            return Try(() =>
+            {
+                var movie =_movieRoomService.Get();
+                return Ok(movie);
+            });
         }
     }
 }
