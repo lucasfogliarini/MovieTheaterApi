@@ -55,7 +55,7 @@ namespace PrintWayyMovieTheater.Tests.Unit
         {
             //Given
             var movie = CreateMovie(2);
-            var roomId = CreateMovieSession(movie.Id);
+            var roomId = CreateSession(movie.Id);
             var movieSession = new MovieSession
             {
                 MovieId = movie.Id,
@@ -123,6 +123,21 @@ namespace PrintWayyMovieTheater.Tests.Unit
             Assert.Throws<ValidationException>(action);
         }
 
+        [Fact]
+        public void GetSessions_ShouldExpectedCount()
+        {
+            //Given
+            SeedSessions();
+            var skip = 0;
+            var expectedCount = 10;
+
+            //When
+            var movies = _movieSessionService.GetSessions(skip);
+
+            //Then
+            Assert.Equal(expectedCount, movies.Count());
+        }
+
         private Movie CreateMovie(int part)
         {
             var movie = new Movie
@@ -135,13 +150,13 @@ namespace PrintWayyMovieTheater.Tests.Unit
             return movie;
         }
 
-        private int CreateMovieSession(int movieId)
+        private int CreateSession(int movieId, int nextDays = 1)
         {
             var movieSession = new MovieSession
             {
                 MovieId = movieId,
                 MotionGraphics = MotionGraphics.ThreeDimensions,
-                PresentationStart = DateTime.Now,
+                PresentationStart = DateTime.Now.AddDays(nextDays),
                 Room = new MovieRoom
                 {
                     Name = "Room 1",
@@ -150,6 +165,14 @@ namespace PrintWayyMovieTheater.Tests.Unit
             };
             _movieSessionService.Create(movieSession);
             return movieSession.RoomId;
+        }
+        private void SeedSessions(int count = 15)
+        {
+            var movie = CreateMovie(5);
+            for (int i = 1; i <= count; i++)
+            {
+                CreateSession(movie.Id, i);
+            }
         }
     }
 }

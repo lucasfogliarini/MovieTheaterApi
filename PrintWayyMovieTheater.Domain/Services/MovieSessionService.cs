@@ -1,6 +1,7 @@
 ﻿using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Repositories;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -50,6 +51,12 @@ namespace PrintWayyMovieTheater.Domain.Services
             _movieTheaterDbRepository.Delete(movieSession);
             var changes = _movieTheaterDbRepository.Commit();
             return changes;
+        }
+
+        public IEnumerable<MovieSession> GetSessions(int skip, int take = 10)
+        {
+            var sessions = _movieTheaterDbRepository.Query<MovieSession>().Skip(skip).Take(take);
+            return sessions;
         }
 
         private MovieSession Get(int movieSessionId)
