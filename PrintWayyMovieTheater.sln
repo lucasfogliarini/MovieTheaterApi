@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintWayyMovieTheater.Tests.Unit", "PrintWayyMovieTheater.Tests.Unit\PrintWayyMovieTheater.Tests.Unit.csproj", "{14E0DBF1-B5DF-4432-988D-BCBAA6E17A7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintWayyMovieTheater.Tests.Unit", "PrintWayyMovieTheater.Tests.Unit\PrintWayyMovieTheater.Tests.Unit.csproj", "{14E0DBF1-B5DF-4432-988D-BCBAA6E17A7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintWayyMovieTheater.Domain", "PrintWayyMovieTheater.Domain\PrintWayyMovieTheater.Domain.csproj", "{1FE81F97-A65C-436F-BEE8-3BF92907C452}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintWayyMovieTheater.Domain", "PrintWayyMovieTheater.Domain\PrintWayyMovieTheater.Domain.csproj", "{1FE81F97-A65C-436F-BEE8-3BF92907C452}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintWayyMovieTheater.Api", "PrintWayyMovieTheater.Api\PrintWayyMovieTheater.Api.csproj", "{1769FF29-2CEE-4710-AF05-3B524394CD82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1FE81F97-A65C-436F-BEE8-3BF92907C452}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FE81F97-A65C-436F-BEE8-3BF92907C452}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FE81F97-A65C-436F-BEE8-3BF92907C452}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1769FF29-2CEE-4710-AF05-3B524394CD82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1769FF29-2CEE-4710-AF05-3B524394CD82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1769FF29-2CEE-4710-AF05-3B524394CD82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1769FF29-2CEE-4710-AF05-3B524394CD82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
