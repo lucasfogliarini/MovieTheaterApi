@@ -31,7 +31,9 @@ namespace PrintWayyMovieTheater.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMovieRoomService movieRoomService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, 
+            IMovieRoomService movieRoomService, 
+            IMovieService movieService)
         {
             if (env.IsDevelopment())
             {
@@ -50,6 +52,7 @@ namespace PrintWayyMovieTheater.Api
             });
 
             SeedMovieRooms(movieRoomService);
+            SeedMovies(movieService);
         }
 
         private void SeedMovieRooms(IMovieRoomService movieRoomService, int count = 5)
@@ -60,6 +63,18 @@ namespace PrintWayyMovieTheater.Api
                 {
                     Name = "Room " + i,
                     Seats = 50 + i
+                });
+            }
+        }
+        private void SeedMovies(IMovieService movieService, int count = 15)
+        {
+            for (int i = 1; i <= count; i++)
+            {
+                movieService.Create(new Movie()
+                {
+                    Title = "Movie " + i,
+                    Duration = 120 + i,
+                    Description = "In summary ... " + i
                 });
             }
         }

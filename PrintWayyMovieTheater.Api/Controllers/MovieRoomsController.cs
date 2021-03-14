@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Services;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PrintWayyMovieTheater.Api.Controllers
 {
