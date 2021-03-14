@@ -24,6 +24,7 @@ namespace PrintWayyMovieTheater.Domain
         /// <param name="serviceCollection"></param>
         public static void AddLogicalServices(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddTransient<IMovieRoomService, MovieRoomService>();
             serviceCollection.AddTransient<IMovieService, MovieService>();
             serviceCollection.AddTransient<IMovieSessionService, MovieSessionService>();
         }
