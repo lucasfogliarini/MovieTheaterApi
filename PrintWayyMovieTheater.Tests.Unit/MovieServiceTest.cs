@@ -137,5 +137,33 @@ namespace PrintWayyMovieTheater.Tests.Unit
             //Then
             Assert.Throws<ValidationException>(action);
         }
+
+        [Fact]
+        public void GetMovies_ShouldExpectedCount()
+        {
+            //Given
+            SeedMovies();
+            var skip = 0;
+            var expectedCount = 10;
+
+            //When
+            var movies = _movieService.GetMovies(skip);
+
+            //Then
+            Assert.Equal(expectedCount, movies.Count());
+        }
+
+        private void SeedMovies(int count = 15)
+        {
+            for (int i = 1; i <= count; i++)
+            {
+                _movieService.Create(new Movie()
+                {
+                    Title = "Movie "+ i,
+                    Duration = 120 + i,
+                    Description = "In summary ... " + i
+                });
+            }
+        }
     }
 }

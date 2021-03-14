@@ -110,14 +110,14 @@ namespace PrintWayyMovieTheater.Tests.Unit
                 PresentationStart = DateTime.Now.AddDays(9),
                 Room = new MovieRoom
                 {
-                    Name = "Room 1",
-                    Seats = 50
+                    Name = "Room 100 Seats",
+                    Seats = 100
                 }
             };
             _movieSessionService.Create(movieSession);
 
             //When
-            void action() => _movieService.Delete(movieSession.Id);
+            void action() => _movieSessionService.Delete(movieSession.Id);
 
             //Then
             Assert.Throws<ValidationException>(action);

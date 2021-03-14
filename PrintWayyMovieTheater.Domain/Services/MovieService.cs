@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Repositories;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -58,7 +59,6 @@ namespace PrintWayyMovieTheater.Domain.Services
             var changes = _movieTheaterDbRepository.Commit();
             return changes;
         }
-
         private Movie Get(int movieId)
         {
             var movie = _movieTheaterDbRepository.Query<Movie>().Include(e=>e.Sessions).FirstOrDefault(e => e.Id == movieId);
@@ -69,6 +69,12 @@ namespace PrintWayyMovieTheater.Domain.Services
             }
             return movie;
         }
+        public IEnumerable<Movie> GetMovies(int skip, int take = 10)
+        {
+            var movies = _movieTheaterDbRepository.Query<Movie>().Skip(skip).Take(take);
+            return movies;
+        }
+
         private void ValidateTitleExistence(string movieTitle)
         {
             var movieExists = _movieTheaterDbRepository.Query<Movie>().Any(e => e.Title == movieTitle);
@@ -78,5 +84,6 @@ namespace PrintWayyMovieTheater.Domain.Services
                 throw new ValidationException(message);
             }
         }
+
     }
 }
