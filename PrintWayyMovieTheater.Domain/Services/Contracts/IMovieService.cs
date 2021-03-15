@@ -9,6 +9,6 @@ namespace PrintWayyMovieTheater.Domain.Services
         int Update(Movie movie);
         int Delete(int movieId);
         Movie Get(int movieId);
-        IEnumerable<Movie> GetMovies(int skip, int take = 10);
+        IEnumerable<Movie> GetMovies(int? skip = null, int? take = null);
     }
 }

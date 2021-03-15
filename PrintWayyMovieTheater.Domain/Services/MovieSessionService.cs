@@ -53,14 +53,14 @@ namespace PrintWayyMovieTheater.Domain.Services
             var changes = _movieTheaterDbRepository.Commit();
             return changes;
         }
-
         public IEnumerable<MovieSession> GetSessions(int skip, int take = 10)
         {
             var sessions = _movieTheaterDbRepository.Query<MovieSession>()
                                                     .Include(e => e.Movie)
                                                     .Include(e => e.Room)
-                                                    .Skip(skip).Take(take)
-                                                    .OrderBy(e=>e.PresentationStart);
+                                                    .OrderBy(e => e.PresentationStart)
+                                                    .Skip(skip).Take(take);
+
             return sessions;
         }
 

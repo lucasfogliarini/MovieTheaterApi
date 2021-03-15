@@ -69,10 +69,18 @@ namespace PrintWayyMovieTheater.Domain.Services
             }
             return movie;
         }
-        public IEnumerable<Movie> GetMovies(int skip, int take = 10)
+        public IEnumerable<Movie> GetMovies(int? skip = null, int? take = null)
         {
-            var movies = _movieTheaterDbRepository.Query<Movie>().Skip(skip).Take(take);
-            return movies;
+            var query = _movieTheaterDbRepository.Query<Movie>();
+            if (skip.HasValue)
+            {
+                query = query.Skip(skip.Value);
+            }
+            if (take.HasValue)
+            {
+                query = query.Take(take.Value);
+            }
+            return query;
         }
 
         private void ValidateTitleExistence(string movieTitle)

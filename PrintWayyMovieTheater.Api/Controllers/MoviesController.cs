@@ -30,7 +30,7 @@ namespace PrintWayyMovieTheater.Api.Controllers
                 }
                 else
                 {
-                    var movies = _movieService.GetMovies(0);
+                    var movies = _movieService.GetMovies();
                     return Ok(movies);
                 }
             });

@@ -147,7 +147,7 @@ namespace PrintWayyMovieTheater.Tests.Unit
             var expectedCount = 10;
 
             //When
-            var movies = _movieService.GetMovies(skip);
+            var movies = _movieService.GetMovies(skip, expectedCount);
 
             //Then
             Assert.Equal(expectedCount, movies.Count());
