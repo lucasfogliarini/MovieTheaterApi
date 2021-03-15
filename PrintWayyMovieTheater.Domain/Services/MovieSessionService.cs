@@ -1,4 +1,5 @@
-﻿using PrintWayyMovieTheater.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Repositories;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,11 @@ namespace PrintWayyMovieTheater.Domain.Services
 
         public IEnumerable<MovieSession> GetSessions(int skip, int take = 10)
         {
-            var sessions = _movieTheaterDbRepository.Query<MovieSession>().Skip(skip).Take(take);
+            var sessions = _movieTheaterDbRepository.Query<MovieSession>()
+                                                    .Include(e => e.Movie)
+                                                    .Include(e => e.Room)
+                                                    .Skip(skip).Take(take)
+                                                    .OrderBy(e=>e.PresentationStart);
             return sessions;
         }
 

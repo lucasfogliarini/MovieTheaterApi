@@ -100,7 +100,7 @@ namespace PrintWayyMovieTheater.Api
                     MovieId = new Random().Next(1, 15),
                     RoomId = new Random().Next(1, 5),
                     TicketPrice = 30 + i,
-                    Audio = (MovieAudio)new Random().Next(0, 2),
+                    Audio = (MovieAudio)new Random().Next(1, 3),
                     MotionGraphics = (MotionGraphics)new Random().Next(2,4),
                     PresentationStart = DateTime.Now.AddDays(i),
                 };

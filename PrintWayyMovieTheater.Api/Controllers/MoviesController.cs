@@ -73,7 +73,7 @@ namespace PrintWayyMovieTheater.Api.Controllers
             return Try(() =>
             {
                 var changes = _movieService.Create(movie);
-                return Ok(changes);
+                return Created("movies/"+movie.Id, changes);
             });
         }
     }

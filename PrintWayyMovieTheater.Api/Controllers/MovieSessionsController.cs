@@ -2,6 +2,7 @@
 using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Services;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PrintWayyMovieTheater.Api.Controllers
 {
@@ -23,7 +24,17 @@ namespace PrintWayyMovieTheater.Api.Controllers
             {
                 int take = 10;
                 take = skip + take;
-                var sessions = _movieSessionService.GetSessions(skip, take);
+                var sessions = _movieSessionService.GetSessions(skip, take).Select(s=>new MovieSessionDto()
+                {
+                    Id = s.Id,
+                    MovieTitle = s.Movie.Title,
+                    RoomName = s.Room.Name,
+                    PresentationStart = s.PresentationStart,
+                    PresentationEnd = s.PresentationEnd,
+                    TicketPrice = s.TicketPrice,
+                    MotionGraphics = s.MotionGraphics,
+                    Audio = s.Audio
+                });
                 return Ok(sessions);
             });
         }
@@ -44,7 +55,7 @@ namespace PrintWayyMovieTheater.Api.Controllers
             return Try(() =>
             {
                 var changes = _movieSessionService.Create(movieSession);
-                return Ok(changes);
+                return Created("/moviesessions/" + movieSession.Id, changes);
             });
         }
     }
