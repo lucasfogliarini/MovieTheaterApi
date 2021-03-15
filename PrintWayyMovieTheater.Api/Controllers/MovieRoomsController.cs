@@ -19,8 +19,8 @@ namespace PrintWayyMovieTheater.Api.Controllers
         {
             return Try(() =>
             {
-                var movie =_movieRoomService.Get();
-                return Ok(movie);
+                var rooms =_movieRoomService.Get();
+                return Ok(rooms);
             });
         }
     }
