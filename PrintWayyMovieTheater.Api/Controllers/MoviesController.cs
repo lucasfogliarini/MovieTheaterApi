@@ -17,14 +17,22 @@ namespace PrintWayyMovieTheater.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetMovies(int skip)
+        public IActionResult GetMovies(int? skip = null)
         {
             return Try(() =>
             {
-                int take = 10;
-                take = skip + take;
-                var movies = _movieService.GetMovies(skip, take);
-                return Ok(movies);
+                if (skip.HasValue)
+                {
+                    int take = 10;
+                    take = skip.Value + take;
+                    var movies = _movieService.GetMovies(skip.Value, take);
+                    return Ok(movies);
+                }
+                else
+                {
+                    var movies = _movieService.GetMovies(0);
+                    return Ok(movies);
+                }
             });
         }
 
