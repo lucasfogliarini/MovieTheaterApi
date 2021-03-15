@@ -37,5 +37,15 @@ namespace PrintWayyMovieTheater.Api.Controllers
                 return Ok(changes);
             });
         }
+
+        [HttpPost]
+        public IActionResult Post(MovieSession movieSession)
+        {
+            return Try(() =>
+            {
+                var changes = _movieSessionService.Create(movieSession);
+                return Ok(changes);
+            });
+        }
     }
 }
