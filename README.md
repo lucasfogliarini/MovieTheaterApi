@@ -1,4 +1,6 @@
-# Setup Api
+# Movie Theater Api
+
+## Setup Api
 
 - [Install .NET 5 with Visual Studio](https://docs.microsoft.com/en-us/dotnet/core/install/windows?tabs=net50#install-with-visual-studio)
 - Run the tests in **PrintWayyMovieTheater.Test.Unit**
@@ -7,5 +9,5 @@
   - Seed data using [EF Core In-Memory Database Provider](https://docs.microsoft.com/en-au/ef/core/providers/in-memory/?tabs=vs)
   - Open the api with the swagger interface on the server **http://localhost:1100**
   
-# Setup UI
+## Setup UI
 See instrucitons in [PrintWayyMovieTheaterUI](https://github.com/lucasfogliarini/PrintWayyMovieTheaterUI)
