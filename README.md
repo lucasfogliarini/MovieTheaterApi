@@ -3,6 +3,7 @@
 ## Setup Api
 
 - [Install .NET 5 with Visual Studio](https://docs.microsoft.com/en-us/dotnet/core/install/windows?tabs=net50#install-with-visual-studio)
+- git clone https://github.com/lucasfogliarini/PrintWayyMovieTheater
 - Run the tests in **PrintWayyMovieTheater.Test.Unit**
 - Run the api **PrintWayyMovieTheater.Api** using IIS Express. It should:
   - Restore the packages.
@@ -10,4 +11,4 @@
   - Open the api with the swagger interface on the server **http://localhost:1100**
   
 ## Setup UI
-See instrucitons in [PrintWayyMovieTheaterUI](https://github.com/lucasfogliarini/PrintWayyMovieTheaterUI)
+See instructions in [PrintWayyMovieTheaterUI](https://github.com/lucasfogliarini/PrintWayyMovieTheaterUI)
