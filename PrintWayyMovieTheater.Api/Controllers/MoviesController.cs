@@ -17,7 +17,7 @@ namespace PrintWayyMovieTheater.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(int skip)
+        public IActionResult GetMovies(int skip)
         {
             return Try(() =>
             {
@@ -34,6 +34,27 @@ namespace PrintWayyMovieTheater.Api.Controllers
             return Try(() =>
             {
                 var changes = _movieService.Delete(movieId);
+                return Ok(changes);
+            });
+        }
+
+        [HttpGet("{movieId}")]
+        public IActionResult Get(int movieId)
+        {
+            return Try(() =>
+            {
+                var movie = _movieService.Get(movieId);
+                return Ok(movie);
+            });
+        }
+
+        [HttpPut("{movieId}")]
+        public IActionResult Put(int movieId, Movie movie)
+        {
+            return Try(() =>
+            {
+                movie.Id = movieId;
+                var changes = _movieService.Update(movie);
                 return Ok(changes);
             });
         }

@@ -59,7 +59,7 @@ namespace PrintWayyMovieTheater.Domain.Services
             var changes = _movieTheaterDbRepository.Commit();
             return changes;
         }
-        private Movie Get(int movieId)
+        public Movie Get(int movieId)
         {
             var movie = _movieTheaterDbRepository.Query<Movie>().Include(e=>e.Sessions).FirstOrDefault(e => e.Id == movieId);
             if (movie == null)

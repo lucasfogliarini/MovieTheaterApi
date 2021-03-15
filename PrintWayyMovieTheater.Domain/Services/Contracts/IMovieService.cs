@@ -8,6 +8,7 @@ namespace PrintWayyMovieTheater.Domain.Services
         int Create(Movie movie);
         int Update(Movie movie);
         int Delete(int movieId);
+        Movie Get(int movieId);
         IEnumerable<Movie> GetMovies(int skip, int take = 10);
     }
 }
