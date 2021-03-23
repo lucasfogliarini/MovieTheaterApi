@@ -11,4 +11,4 @@
   - Open the api with the swagger interface on the server **http://localhost:1100**
   
 ## Setup UI
-See instructions in [PrintWayyMovieTheaterUI](https://github.com/lucasfogliarini/PrintWayyMovieTheaterUI)
+See instructions in [MovieTheaterUI](https://github.com/lucasfogliarini/MovieTheaterUI)
