@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Repositories;
+using PrintWayyMovieTheater.Domain.Validation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace PrintWayyMovieTheater.Domain.Services
@@ -11,14 +12,17 @@ namespace PrintWayyMovieTheater.Domain.Services
     public class MovieSessionService : IMovieSessionService
     {
         private readonly IMovieTheaterDbRepository _movieTheaterDbRepository;
+        private readonly MovieSessionValidator _movieSessionValidator;
 
         public MovieSessionService(IMovieTheaterDbRepository movieTheaterDbRepository)
         {
             _movieTheaterDbRepository = movieTheaterDbRepository;
+            _movieSessionValidator = new MovieSessionValidator();
         }
 
         public int Create(MovieSession movieSession)
         {
+            _movieSessionValidator.ValidateAndThrow(movieSession);
             var movie = _movieTheaterDbRepository.Query<Movie>().FirstOrDefault(e => e.Id == movieSession.MovieId);
             movieSession.PresentationEnd = movieSession.PresentationStart.AddMinutes(movie.Duration);
 

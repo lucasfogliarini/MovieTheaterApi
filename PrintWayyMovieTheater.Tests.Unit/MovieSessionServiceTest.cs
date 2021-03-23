@@ -3,11 +3,8 @@ using PrintWayyMovieTheater.Domain;
 using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Services;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace PrintWayyMovieTheater.Tests.Unit
@@ -34,6 +31,8 @@ namespace PrintWayyMovieTheater.Tests.Unit
             {
                 MovieId = movie.Id,
                 MotionGraphics = MotionGraphics.ThreeDimensions,
+                Audio = MovieAudio.Original,
+                TicketPrice = 1,
                 PresentationStart = DateTime.Now.AddDays(20),
                 Room = new MovieRoom
                 {
@@ -55,21 +54,23 @@ namespace PrintWayyMovieTheater.Tests.Unit
         {
             //Given
             var movie = CreateMovie(2);
-            var roomId = CreateSession(movie.Id);
+            var nextDays = 1;
+            var roomId = CreateSession(movie.Id, nextDays);
             var movieSession = new MovieSession
             {
                 MovieId = movie.Id,
                 RoomId = roomId,
+                TicketPrice = 1,
+                Audio = MovieAudio.Original,
                 MotionGraphics = MotionGraphics.ThreeDimensions,
-                PresentationStart = DateTime.Now.AddMinutes(movie.Duration),
+                PresentationStart = DateTime.Now.AddDays(nextDays),
             };
-            var expectedChanges = 1;
 
             //When
-            var changes = _movieSessionService.Create(movieSession);
+            void action() => _movieSessionService.Create(movieSession);
 
             //Then
-            Assert.Equal(expectedChanges, changes);
+            Assert.Throws<ValidationException>(action);
         }
 
         [Fact]
@@ -81,6 +82,8 @@ namespace PrintWayyMovieTheater.Tests.Unit
             {
                 MovieId = movie.Id,
                 MotionGraphics = MotionGraphics.ThreeDimensions,
+                Audio = MovieAudio.Original,
+                TicketPrice = 1,
                 PresentationStart = DateTime.Now.AddDays(10),
                 Room = new MovieRoom
                 {
@@ -107,6 +110,8 @@ namespace PrintWayyMovieTheater.Tests.Unit
             {
                 MovieId = movie.Id,
                 MotionGraphics = MotionGraphics.ThreeDimensions,
+                Audio = MovieAudio.Original,
+                TicketPrice = 1,
                 PresentationStart = DateTime.Now.AddDays(9),
                 Room = new MovieRoom
                 {
@@ -156,7 +161,9 @@ namespace PrintWayyMovieTheater.Tests.Unit
             {
                 MovieId = movieId,
                 MotionGraphics = MotionGraphics.ThreeDimensions,
+                TicketPrice = 1,
                 PresentationStart = DateTime.Now.AddDays(nextDays),
+                Audio = MovieAudio.Dubbing,
                 Room = new MovieRoom
                 {
                     Name = "Room 1",

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 
 namespace PrintWayyMovieTheater.Api.Controllers
 {

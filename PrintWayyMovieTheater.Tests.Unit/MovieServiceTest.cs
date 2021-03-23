@@ -4,10 +4,8 @@ using PrintWayyMovieTheater.Domain.Entities;
 using PrintWayyMovieTheater.Domain.Services;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace PrintWayyMovieTheater.Tests.Unit
