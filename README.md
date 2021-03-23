@@ -3,7 +3,7 @@
 ## Setup Api
 
 - [Install .NET 5 with Visual Studio](https://docs.microsoft.com/en-us/dotnet/core/install/windows?tabs=net50#install-with-visual-studio)
-- git clone https://github.com/lucasfogliarini/PrintWayyMovieTheater
+- git clone https://github.com/lucasfogliarini/MovieTheaterApi
 - Run the tests in **PrintWayyMovieTheater.Test.Unit**
 - Run the api **PrintWayyMovieTheater.Api** using IIS Express. It should:
   - Restore the packages.
